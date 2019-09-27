@@ -1,5 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express';
 
+import { AppRouter } from '../AppRouter';
+
 interface RequestWithBody extends Request {
 	body: { [key: string]: string | undefined };
 }
@@ -14,7 +16,7 @@ function requireAuth(req: Request, res: Response, next: NextFunction): void {
 	res.send('Not permitted');
 }
 
-const router = Router();
+const router = AppRouter.getInstance();
 
 router.get('/', (req: Request, res: Response) => {
 	if (req.session && req.session.loggedIn) {
@@ -59,4 +61,4 @@ router.get('/protected', requireAuth, (req: Request, res: Response) => {
 	res.send('Welcome to protected route, logged in user');
 });
 
-export { router };
+// export { router };
